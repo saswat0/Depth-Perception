@@ -53,7 +53,8 @@ class ResNet50UpProj(Network):
              .batch_normalization(relu=True, name='bn3a_branch2b')
              .conv(1, 1, 512, 1, 1, biased=False, relu=False, name='res3a_branch2c')
              .batch_normalization(name='bn3a_branch2c'))
-                (self.feed('bn3a_branch1',
+                
+        (self.feed('bn3a_branch1',
                    'bn3a_branch2c')
              .add(name='res3a')
              .relu(name='res3a_relu')
