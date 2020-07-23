@@ -93,3 +93,44 @@ class ResNet50UpProj(Network):
              .conv(1, 1, 1024, 2, 2, biased=False, relu=False, name='res4a_branch1')
              .batch_normalization(name='bn4a_branch1'))
 
+        (self.feed('res3d_relu')
+             .conv(1, 1, 256, 2, 2, biased=False, relu=False, name='res4a_branch2a')
+             .batch_normalization(relu=True, name='bn4a_branch2a')
+             .conv(3, 3, 256, 1, 1, biased=False, relu=False, name='res4a_branch2b')
+             .batch_normalization(relu=True, name='bn4a_branch2b')
+             .conv(1, 1, 1024, 1, 1, biased=False, relu=False, name='res4a_branch2c')
+             .batch_normalization(name='bn4a_branch2c'))
+
+        (self.feed('bn4a_branch1',
+                   'bn4a_branch2c')
+             .add(name='res4a')
+             .relu(name='res4a_relu')
+             .conv(1, 1, 256, 1, 1, biased=False, relu=False, name='res4b_branch2a')
+             .batch_normalization(relu=True, name='bn4b_branch2a')
+             .conv(3, 3, 256, 1, 1, biased=False, relu=False, name='res4b_branch2b')
+             .batch_normalization(relu=True, name='bn4b_branch2b')
+             .conv(1, 1, 1024, 1, 1, biased=False, relu=False, name='res4b_branch2c')
+             .batch_normalization(name='bn4b_branch2c'))
+
+        (self.feed('res4a_relu',
+                   'bn4b_branch2c')
+             .add(name='res4b')
+             .relu(name='res4b_relu')
+             .conv(1, 1, 256, 1, 1, biased=False, relu=False, name='res4c_branch2a')
+             .batch_normalization(relu=True, name='bn4c_branch2a')
+             .conv(3, 3, 256, 1, 1, biased=False, relu=False, name='res4c_branch2b')
+             .batch_normalization(relu=True, name='bn4c_branch2b')
+             .conv(1, 1, 1024, 1, 1, biased=False, relu=False, name='res4c_branch2c')
+             .batch_normalization(name='bn4c_branch2c'))
+
+        (self.feed('res4b_relu',
+                   'bn4c_branch2c')
+             .add(name='res4c')
+             .relu(name='res4c_relu')
+             .conv(1, 1, 256, 1, 1, biased=False, relu=False, name='res4d_branch2a')
+             .batch_normalization(relu=True, name='bn4d_branch2a')
+             .conv(3, 3, 256, 1, 1, biased=False, relu=False, name='res4d_branch2b')
+             .batch_normalization(relu=True, name='bn4d_branch2b')
+             .conv(1, 1, 1024, 1, 1, biased=False, relu=False, name='res4d_branch2c')
+             .batch_normalization(name='bn4d_branch2c'))
+
