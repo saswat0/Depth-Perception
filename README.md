@@ -1,2 +1,2 @@
 # Depth-Perception
-Dpeth Perception using FCRN
+Depth Perception using FCRN
