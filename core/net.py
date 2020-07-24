@@ -288,7 +288,6 @@ class Network(object):
 		# Model upconvolutions (unpooling + convolution) as interleaving feature
 		# maps of four convolutions (A,B,C,D). Building block for up-projections. 
 
-
         # Convolution A (3x3)
         # --------------------------------------------------
         layerName = "layer%s_ConvA" % (id)
