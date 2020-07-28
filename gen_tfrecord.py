@@ -19,6 +19,22 @@ lens=len(eptlist)
 print(lens)
 indexar=np.arange(lens)
 
+randindex=np.random.permutation(indexar)
+for indexx in randindex:
+    filename = eptlist[indexx]
+    imgraw = Image.open(rgbdir+filename).convert('RGB')
+    imgraw = imgraw.resize((width, height),Image.BILINEAR)
+    imgraw = imgraw.tobytes()
+    imglabel = Image.open(depthdir+filename).convert('F')
+    imglabel = imglabel.resize((depth_width, depth_height),Image.BILINEAR)
+    imglabel = imglabel.tobytes()
+    example = tf.train.Example(features=tf.train.Features(feature={
+        'img': tf.train.Feature(bytes_list=tf.train.BytesList(value=[imgraw])),
+        'label': tf.train.Feature(bytes_list=tf.train.BytesList(value=[imglabel]))
+    }))
+    trainwriter.write(example.SerializeToString())
+trainwriter.close()
+
 testwriter= tf.python_io.TFRecordWriter("test.tfrecords")
 rgbdir = './rgb_test/'
 depthdir = './depth_test/'
